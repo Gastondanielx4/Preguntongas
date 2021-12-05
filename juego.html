@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de preguntas</title>
+    <link rel="stylesheet" href="normalize.css"-->
+    <link rel="stylesheet" href="estilos2.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="numero_pregunta">
+        <div class="numero">
+            <p id="numero_pregunta"></p>
+        </div>
+    </div>
+
+    <div class="preguntas_respuestas">
+        <div class="pregunta" id="pregunta"><p id="pregunta"></p></div>
+        <div class="respuestas">
+            <button class="boton" id="btn1"><p> </p></button>
+            <button  class="boton" id="btn2"><p> </p></button >
+            <button  class="boton" id="btn3"><p> </p></button >
+        </div>
+            <div id= "div_resultado" class="resultado">
+                <p id="resultado" >
+                </p>
+            </div>
+            <div class="puntaje">
+                <p>Puntos:</p>
+                <p id="puntos"></p>
+            </div>
+            <button id="pasarPregunta" class="siguiente_pregunta"> <p>Siguiente</p> </button>
+    <script src="PreguntasRespuestas.js"></script>
+</body>

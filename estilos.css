@@ -1,0 +1,39 @@
+body{
+    height: 100vh;
+    width: 100vw;
+    margin:0;
+    padding: 0;
+    background: url(img/2959.jpg);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+body h1{
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 2rem ;
+    line-height: 3rem;
+    color: rgb(243, 221, 131);
+    margin-bottom: 5rem;
+}
+main .opciones{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 7rem;
+}
+.opciones a{
+    margin: 1rem;
+}
+.opciones a input{
+    height: 4rem;
+    width: 9rem;
+    border-style: none;
+    background-color: tomato;
+    border-radius: 30px;
+    font-family: 'Sansita Swashed', cursive;
+    font-size: 1.8rem;
+    color: rgb(243, 221, 131);
+}
