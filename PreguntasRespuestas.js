@@ -1,11 +1,4 @@
 'use strict'
-let puntaje = 0;
-actualizarPuntaje()
-
-function actualizarPuntaje(){
-    document.getElementById('puntos').innerHTML = puntaje;
-}
-
 const preguntas = [
     {   
         numeroDePregunta:1,
@@ -76,83 +69,130 @@ const preguntas = [
         },
         correcta:"b",
     },
-    
 ]
 
+let puntaje = 0;
 let i = 0;
-let contador = 0
+let cantidadDePreguntas = preguntas.length
+let boton1 = document.getElementById('btn1')
+let boton2 = document.getElementById('btn2')
+let boton3 = document.getElementById('btn3')
 
-function realizarCuestionario(i) { 
-    
-    document.getElementById('numero_pregunta').innerHTML = (preguntas[i].numeroDePregunta)
-    document.getElementById('pregunta').innerHTML = (preguntas[i].pregunta)
-    let boton1 = document.getElementById('btn1')
-    let boton2 = document.getElementById('btn2')
-    let boton3 = document.getElementById('btn3')
+function actualizarPuntaje(){
+    document.getElementById('puntos').innerHTML = puntaje;
+}
+
+function realizarCuestionario(i) {
     let a = preguntas[i].respuestas.a
     let b = preguntas[i].respuestas.b
     let c = preguntas[i].respuestas.c
-    let botonPasar = document.getElementById('pasarPregunta')
-    botonPasar.addEventListener('click', () => {i++,realizarCuestionario(i)},)
+    
+    document.getElementById('numero_pregunta').innerHTML = (preguntas[i].numeroDePregunta)
+    document.getElementById('pregunta').innerHTML = (preguntas[i].pregunta)
     document.getElementById('btn1').innerHTML = a
     document.getElementById('btn2').innerHTML = b
     document.getElementById('btn3').innerHTML = c
-   for (let e= 0; e<=contador; e++){
-        boton1.addEventListener('click', click1,) 
-        boton2.addEventListener('click', click2,)
-        boton3.addEventListener('click', click3,)
-   } 
-  
+    boton1.addEventListener('click', click1,) 
+    boton2.addEventListener('click', click2,)
+    boton3.addEventListener('click', click3,)
+}
+
+function habilitarBotones(){
+    boton1.disabled = false;
+    boton2.disabled = false;
+    boton3.disabled = false;
+}
+
+function deshabilitarBotones(){
+    boton1.disabled = true;
+    boton2.disabled = true;
+    boton3.disabled = true;
+}
+
+function pasarPregunta () {
+    let botonPasar = document.getElementById('pasarPregunta')
+    botonPasar.addEventListener('click',clickSiguiente)
+}
+
+function clickSiguiente () {
+    i++;
+    habilitarBotones()
+    if(i < preguntas.length){
+        realizarCuestionario(i),
+        document.getElementById('div_resultado').className = "resultado",
+        document.getElementById('btn1').className = "boton"
+        document.getElementById('btn2').className = "boton"
+        document.getElementById('btn3').className = "boton"
+        console.log(i);
+        if(i === preguntas.length-1){
+            document.getElementById('pPuntos').innerHTML = "PUNTAJE TOTAL";
+            document.getElementById('pasarPregunta').innerHTML = "¿REINICIAR?"
+        }
+    }
+    else{
+        document.getElementById('pasarPregunta').innerHTML = "Reiniciando..."
+        setTimeout( function() { window.location.href = "index.html"; }, 3000 );
+        console.log("Termino el cuestionario");
+    }
 }
 
 function click1 (){
-    contador++;
     let eleccion = "a";
+    deshabilitarBotones()
     if(eleccion === preguntas[i].correcta){
         puntaje+=10;
         document.getElementById('btn1').className = "boton correcto";
         actualizarPuntaje()
         darCorrecto ()
+        pasarPregunta ()
     }
     else{
         puntaje-=10
         document.getElementById('btn1').className = "boton incorrecto";
         actualizarPuntaje()
         darIncorrecto ()
+        pasarPregunta ()
     }
 }
 
 function click2 (){
-    contador++;
     let eleccion = "b";
+    deshabilitarBotones()
     if(eleccion === preguntas[i].correcta){
         document.getElementById('btn2').className = "boton correcto";
         puntaje+=10;
         actualizarPuntaje()
+        darCorrecto ()
+        pasarPregunta ()
     }
     else{
         puntaje-=10
         document.getElementById('btn2').className = "boton incorrecto";
         actualizarPuntaje()
         darIncorrecto ()
+        pasarPregunta () 
     }
 }
 
 function click3 (){
-    contador++;
     let eleccion = "c";
+    deshabilitarBotones()
     if(eleccion === preguntas[i].correcta){
         document.getElementById('btn3').className = "boton correcto";
         puntaje+=10;
         actualizarPuntaje()
+        darCorrecto ()
+        pasarPregunta ()
     }
     else{
         puntaje-=10
         document.getElementById('btn3').className = "boton incorrecto";
         actualizarPuntaje()
         darIncorrecto ()
+        pasarPregunta ()
     }
 }
+
 function darCorrecto () {
     document.getElementById('div_resultado').className = "resultado correcto";
     document.getElementById('resultado').innerHTML = "Correcto"
@@ -163,103 +203,6 @@ function darIncorrecto() {
     document.getElementById('resultado').innerHTML = "Incorrecto"
 }
 
-console.log(contador);
+actualizarPuntaje()
+
 document.addEventListener('DOMContentLoaded', realizarCuestionario (i), false)
-
-/* for(let i=0;i<preguntas.length;i++){
-    console.log(preguntas[i])
-} */
-
-/* function pregunta1()
-    let preguntaPregunta1 = "1.¿Cual es la capital de Chile?"
-    let correcta1= "No se pero queda cerca del Mar"
-    let incorrectas= ["Chile","Amar azul","No se pero queda cerca del Mar"]
-    if (respuesta1 == correcta1 ){
-        puntaje += 10;
-        alert ("Correcto, por no hacerte el intelectual poniendo la Opcion 3 y  bien por bardear a los indios barranqueros estos, +10 Pa! \nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, era la opcion bardera...\nTu puntaje es "+ puntaje );
-    }
-}
-let pregunta1 = {
-    preguntaPregunta1 = "1.¿Cual es la capital de Chile?";
-    correcta1= "No se pero queda cerca del Mar";
-    incorrecta1_1= "Chile";
-    incorrecta1_2= "Amar azul";
-    function respuestas1 () {
-        if (respuesta1 == correcta1 ){
-            puntaje += 10;
-            alert ("Correcto, por no hacerte el intelectual poniendo la Opcion 3 y  bien por bardear a los indios barranqueros estos, +10 Pa! \nTu puntaje es "+ puntaje );
-        }
-        else {
-            puntaje -= 10;
-            alert ("Incorrecto, era la opcion bardera...\nTu puntaje es "+ puntaje );
-        }
-    }
-}
- */
-/* let puntaje = 0;
-
-
-alert ("1.¿Cual es la capital de Chile?\n(responde con el número de la respuesta o tipea tal cual la respuesta)"); 
-let correctaUno = "No se pero queda cerca del Mar"
-let respuestaUno = prompt ('1.Chile\n2.'+correctaUno+ '\n3.Santiago de Chile\n4.Amar azul');
-    if (respuestaUno == 2 || respuestaUno == correctaUno ){
-        puntaje += 10;
-        alert ("Correcto, por no hacerte el intelectual poniendo la Opcion 3 y  bien por bardear a los indios barranqueros estos, +10 Pa! \nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, era la opcion bardera...\nTu puntaje es "+ puntaje );
-    }
-
-alert ('2.¿Como deberia llamarse nuestro pais?\n(responde con el número de la respuesta o tipea tal cual la respuesta)\n\n\n\n\nPuntaje: '+ puntaje);
-let correctaDos = "Republica Peronia"
-let respuestaDos = prompt ('1. '+ correctaDos + '\n 2. Argentain\n3. Argenzuela\n4. Argenchina')
-    if(respuestaDos == 1 || respuestaDos == correctaDos ){
-        puntaje += 10;
-        alert ("Esta es la que mas gracia me causa, pero todas podrian ser correctas.\nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, pero podria ser cualquiera.\n Tu puntaje es "+ puntaje );
-    }
-
-alert ('3.¿Que es lo mejor de Argentina?\n(responde con el número de la respuesta o tipea tal cual la respuesta)\n\n\n\n\nPuntaje: '+ puntaje);
-let correctaTres = "El gordo Barassi"
-let respuestaTres = prompt ('1. El Asado\n 2. "La aventura (chorros vs laburantes)"\n3. ' + correctaTres + '\n4. El diegote')
-    if(respuestaTres == 3 || respuestaTres == correctaTres ){
-        puntaje += 10;
-        alert ("Correcta, porque se me canta en este momento! \nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, lo lamento si pusiste al diego o al asado =( \nTu puntaje es "+ puntaje );
-    }
-
-alert ('4.¿"Cual es el trabajo mas ñoqui?"\n(responde con el número de la respuesta o tipea tal cual la respuesta)\n\n\n\n\nPuntaje: '+ puntaje);
-let correctaCuatro = "Project Manager (EMA)"
-let respuestaCuatro = prompt ('1. Municipal\n2. Docente\n3. Politico\n4. '+ correctaCuatro)
-    if(respuestaCuatro == 4 || respuestaCuatro == correctaCuatro ){
-        puntaje += 10;
-        alert ("Incorrecto, pero ganaste 10pts por bardearlo al Ema; \nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, seguramente necesitas un ascenso...\nTu puntaje es "+ puntaje );
-    }
-    
-alert ('5.¿"Cual es el trabajo mas gay?"\n(responde con el número de la respuesta o tipea tal cual la respuesta)\n\n\n\n\nPuntaje: '+ puntaje);
-let correctaCinco = "Desarrollador (Frontend) - Lo que hace Matias"
-let respuestaCinco = prompt ('1. Profe de Danza\n2. Peluquero\n3. Diseñador de moda\n4. '+ correctaCinco +'\n5. De lo que sea en Federacion Patronal Seguros')
-    if(respuestaCinco == 4 || respuestaCinco == correctaCinco ){
-        puntaje += 10;
-        alert ("Tambien es Incorrecto, pero por bardearlo a Mati 10+ pa vos...\nTu puntaje es "+ puntaje );
-    }
-    else {
-        puntaje -= 10;
-        alert ("Incorrecto, tambien por chupa medias...\nTu puntaje es "+ puntaje );
-    } */
-        
